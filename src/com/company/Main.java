@@ -15,8 +15,9 @@ import java.util.Comparator;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     static Path boardPath = Paths.get("leaderboard.txt");   // ne ukazana direktorija, poetomu file zapiwetsja
-    private static final List<GameResult> leaderBoard = loadLeaderBoard();  //loadLeaderBoard iz konca programi
     // v direktorii s programmoj
+    private static final List<GameResult> leaderBoard = loadLeaderBoard();  //loadLeaderBoard iz konca programi
+
 
     public static void main(String[] args) {
 
@@ -34,7 +35,7 @@ public class Main {
             System.out.println("I'm thinking a number from 1 to 100. Try to guess it!");
             boolean userWin = false;
             for (int attempt = 1; attempt <= 10; attempt++) {
-                String msg = String.format("Attempt #%d. Enter your guess: ", attempt);
+                String msg = String.format("Attempt № #%d. Enter your guess: ", attempt);
 
                 int userNum = askNumber(msg, 100, 1);
                 if (myNum > userNum) {
@@ -81,7 +82,7 @@ public class Main {
         List<GameResult> top = leaderBoard.subList(0, maxDisplay);
         for (GameResult r : top) {
             System.out.printf("\t %s \t\t %8d \t\t %5.1f sec\n", r.name, r.attempt, r.time / 1000.0);
-            // %8d - 8 otstupov - wtobi cifra vsegda bila prizhata (esli chislo "7" to 8 otstupov, esli "70" to 7 i t.d.
+            // %8d - 8 otstupov - wtobi cifra vsegda bila prizhata (esli chislo "7" to 8 otstupov, esli "7" to 7 i t.d.
             // d - celoe chislo
             // %5.1f - 5 otstupov i .1 chislo posle zapjatoj. f - drobnoe chislo
         }
@@ -140,8 +141,10 @@ public class Main {
         try (Writer out = Files.newBufferedWriter(boardPath)) {
             // writer - wto-to vrode printf
             for (GameResult r : leaderBoard) {
-                String line = String.format("%s %d %d \n", r.name, r.attempt, r.time);
+                String line = String.format("%s \n", r.name);
                 out.write(line);
+                String line2 = String.format("%d %d \n ", r.attempt, r.time);
+                out.write(line2);
             }
         } catch (IOException e) {
             System.out.println("Error writing to file");
